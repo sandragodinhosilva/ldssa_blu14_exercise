@@ -325,7 +325,7 @@ def predict():
         proba=proba,
         observation=request.data,
     )
-    # p.save()
+    p.save()
     return jsonify(response)
 
     
