@@ -9,13 +9,19 @@ from peewee import (
     FloatField, TextField, IntegrityError
 )
 from playhouse.shortcuts import model_to_dict
-from playhouse.db_url import connect
 
+from playhouse.db_url import connect
 
 ########################################
 # Begin database stuff
 
+
+# The connect function checks if there is a DATABASE_URL env var.
+# If it exists, it uses it to connect to a remote postgres db.
+# Otherwise, it connects to a local sqlite db stored in predictions.db.
 DB = connect(os.environ.get('DATABASE_URL') or 'sqlite:///predictions.db')
+
+#DB = SqliteDatabase('predictions.db')
 
 
 class Prediction(Model):
@@ -326,7 +332,7 @@ def predict():
         proba=proba,
         observation=request.data,
     )
-    p.save()
+    # p.save()
     return jsonify(response)
 
     
